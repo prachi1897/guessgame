@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <style>
+
+        #table{
+            border-collapse:collapse;
+            border:1px solid black;
+            width:100%;
+            color:black;
+        }
+        #radio-1{
+            
+            font:Courier;
+            background-size:cover;
+
+        }
+        #radio-2{
+
+            color:black;
+            font:Verdana;
+            background-size:cover;
+        }
+
+
+        li{
+            list-style-type:none;
+        }
+        table.dataTable tbody tr {
+                  background-color: initial;
+                  color:black;
+                  tr:nth-child(even){background-color:#39FF13;
+         }
+        
+#songs_info {
+    display: none;
+}
+
+#songs_filter {
+    color: transparent;
+}
+#songs_filter input {
+    width: 400px;
+    margin-bottom: 1rem;
+    font-size: 16px;
+}
+
+    </style>
+    <meta charset="UTF-8">
+    <title> Song App </title>
+	
+    <link rel="stylesheet" type="text/css" href="font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+       <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+
+<body>
+<!--Welcome screen-->
+    <div class="wrapper">
+        <section class="welcome-screen">
+            <h1> Welcome to Songify </h1>
+            <h3> Enter name to access your account </h3>
+            <div class="input-wrapper">
+                <input type="text" placeholder="Name" id="name-input">
+                <button> Go </button>
+            </div>
+        </section>
+        <div class="main hidden">
+            <header><div class="right floated user-name"></div></header>
+
+            <section class="content">
+<table id="songs">
+<thead>
+        
+            <td>Title</td>
+            <td>Artist</td>
+            <td>Album</td>
+            <td>Duration</td>
+            
+            </thead>
+            <tbody> 
+            <tr id='song1'>
+                <td class="song-name"></td>
+                <td class="song-artist"></td>
+                <td class="song-album"></td>
+                <td class="song-duration"></td>
+            </tr>
+
+            <tr id='song2'>
+                <td class="song-name"></td>
+                <td class="song-artist"></td>
+                <td class="song-album"></td>    
+                <td class="song-duration"></td>
+            </tr>
+            <tr id='song3'>
+                <td class="song-name"></td>
+                <td class="song-artist"></td>
+                <td class="song-album"></td>
+                <td class="song-duration"></td>
+            </tr>
+            <tr id='song4'>
+            <td class="song-name"></td>
+            <td class="song-artist"></td>
+            <td class="song-album"></td>
+            <td class="song-duration"></td>
+            </tr>
+            </tbody>
+            </table>			
+			
+  <div class="imagetext">
+            <img src="trumpets.jfif" class="current-song-image">
+            <h2 class="current-song-name">Trumpets</h2>
+			<h4 class="current-song-album">Unknown</h4>
+			<h4 class="current-song-artist">Lady</h4>
+            <audio src="03 - Trumpets.mp3" controls>
+            </audio>
+            </div>
+
+        <p class="duration-song"></p>
+        <p class="update-song"></p>
+        <button type="button"class="dur">Duration</button>
+        <button type="button"class="show">Show</button>
+
+          <h2>Try selecting different themes</h2>
+
+
+            <!--Background selection radio buttons-->
+            <div class="container">
+                <input type="radio" id="radio-1" name="group1" class="g2">
+                <label for="radio-1"><span class="radio" color:'black'>Happy<span></label>
+            </div>
+            <div class="container">
+                <input type="radio" name="group1" id="radio-2" class="g1">
+                <label for="radio-2"><span class="radio">Light</span></label>
+            </div>
+            <div class="container">
+                <input type="radio" name="group1" id="radio-3" class="g1">
+                <label for="radio-3"><span class="radio">Energetic</span></label>
+            </div>
+            <div class="container">
+                <input type="radio" name="group1" id="radio-4" class="g1">
+                <label for="radio-4"><span class="radio">Sad</span></label>
+        </section>
+
+                
+
+        <footer>
+        <div class="controls">
+        <i class="fa fa-play clickable play-icon" aria-hidden="true"></i>
+        </div>
+        </footer>
+        </div>
+    </div>
+    
+  
+
+<script src="jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js">
+</script>
+<script>
+function fancyTimeFormat(time)
+
+                        {   
+                             // Hours, minutes and seconds
+                                var hrs = ~~(time / 3600);
+                                var mins = ~~((time % 3600) / 60);
+                                var secs = time % 60;
+
+                             // Output like "1:01" or "4:03:59" or "123:03:59"          
+                                var ret = "";
+
+                                if (hrs > 0) {
+                                    ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+                                 }
+
+                                ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+                                ret += "" + secs;
+                                 return ret;
+                                }
+
+
+                    //we get to know the duration of the song
+                    function durationSong(){
+                            var songs=$('audio')[0];
+                            var songdur = Math.floor(songs.duration);
+                            console.log(songs);
+                            songdur=fancyTimeFormat(songdur);
+                            console.log(songdur);
+                            $('.duration-song').text(songdur);  
+                        }
+                        $('.dur').on('click',function(){
+                     durationSong();
+                    });
+
+            function updateCurrentTime(){       
+                    var song=$('audio')[0];
+                    var current=Math.floor(song.currentTime);
+                    console.log(current);
+                    var currentTime=fancyTimeFormat(currentTime);
+                    $('.update-song').text(current);
+                }
+
+            $('.show').on('click',function()
+            {
+                updateCurrentTime();
+            });            
+          
+
+
+
+
+var songObj=[
+            {
+                name:'Trumpets',
+                artist:'Lady',
+                album:'Unknown',
+                duration:"3.37",
+                fileName:"03 - Trumpets.mp3",
+                image:'trumpets.jfif'
+            },
+            {
+                name:'Scream and shout',
+                artist:'Britney Spears',
+                album:'Pub',
+                duration:"4:45",
+                fileName:"01 Will.i.am Feat Britney Spears - Scream & Shout (Explicit Edit).mp3",
+                image:'download.jfif'
+                },          
+            {
+                name:'Demons',
+                artist:'Eminem',
+                album:'Imagine Lady',
+                duration:"2:57",
+                fileName:"20 - Demons - Imagine Dragons.mp3",
+                image:'demons.jfif'
+                },
+            {
+                name:'Fall to Pieces',
+                artist:'Taylor Swift',
+                album:'Taylor ',
+                duration:"3:30",
+                fileName:"FALL TO PIECES.mp3",
+                image:'hqdefault.jpg'
+            }
+
+                ]
+
+            
+
+  //add song and its details to diplay in tabular format
+function addSongDetailsToTable()
+{
+$('#song1 .song-name').text(songObj[0].name);
+$('#song2 .song-name').text(songObj[1].name);
+$('#song3 .song-name').text(songObj[2].name);
+$('#song4 .song-name').text(songObj[3].name);
+
+$('#song1 .song-artist').text(songObj[0].artist);
+$('#song2 .song-artist').text(songObj[1].artist);
+$('#song3 .song-artist').text(songObj[2].artist);
+$('#song4 .song-artist').text(songObj[3].artist);
+
+$('#song1 .song-album').text(songObj[0].album);
+$('#song2 .song-album').text(songObj[1].album);
+$('#song3 .song-album').text(songObj[2].album);
+$('#song4 .song-album').text(songObj[3].album);
+
+$('#song1 .song-duration').text(songObj[0].duration);
+$('#song2 .song-duration').text(songObj[1].duration);
+$('#song3 .song-duration').text(songObj[2].duration);
+$('#song4 .song-duration').text(songObj[3].duration);
+}
+            
+console.log(songObj[0])
+     
+//Press enter and proceed on front page
+$('body').on('keypress', function(event) 
+{
+    var target=event.target;
+    if(event.keyCode==13)
+    {
+     
+        var name = $('#name-input').val();
+    console.log(name.length);
+    if(name.length>2)
+    {
+    var message = "Welcome, " + name;
+    $('.main .user-name').text(message);
+    $('.welcome-screen').addClass('hidden');
+    $('.main').removeClass('hidden');
+    }else{
+        $('#name-input').addClass('error');
+    }}
+});
+
+function changeCurrentSongDetails(songObj){
+    var length=songObj.image;
+    $('.current-song-image').attr('src',length);
+    $('.current-song-name').text(songObj.name);
+    $('.current-song-album').text(songObj.album);
+	$('.current-song-artist').text(songObj.artist)
+}
+
+//function to toggle song
+  function toggleSong(){
+    console.log("good");
+    var song=$('audio')[0];
+    console.log("play");
+    if(song.paused==true){
+    console.log("play");
+    $('.play-icon').removeClass('fa-play').addClass('fa-pause');
+    song.play();
+}
+    else{
+        console.log("Pausing");
+        $('.play-icon').removeClass('fa-pause').addClass('fa-play');
+        song.pause();
+}
+ }
+function addSongNameClickEvent(songObj,id){
+    var id="#song" +id;
+    $(id).click(function() {
+        var audio = $('audio')[0];
+        var currentSong = audio.src;
+        if(currentSong.search(songObj.fileName) != -1)
+        {
+
+            toggleSong();
+
+        }
+        else {
+            audio.src = songObj.fileName;
+            audio_duration=audio.duration;
+            console.log(songObj.duration)
+            toggleSong();
+            changeCurrentSongDetails(songObj);
+        }
+    });
+
+
+}
+//press spacebar and toggle the song
+$('body').on('keypress',function(event) {
+    var target = event.target;
+    if (event.keyCode == 32 && target.tagName !='INPUT')
+    {
+        toggleSong();
+    }
+});
+
+
+
+        //Welcome screen 
+ $('.welcome-screen button').on('click', function() {
+        var name = $('#name-input').val();
+        console.log(name.length);
+        if (name.length > 2) {
+            var message = "Welcome, " + name;
+            $('.main .user-name').text(message);
+            $('.welcome-screen').addClass('hidden');
+            $('.main').removeClass('hidden');
+        } else {
+            $('#name-input').addClass('error');
+        }
+    });
+$(document).ready(function(){
+    console.log("hii");
+    addSongDetailsToTable();
+    for(var i=0;i<songObj.length;i++){
+        console.log(songObj[0].filename);
+        var obj=songObj[i];
+        var name='#song'+(i+1);
+        var song= $(name);
+         song.find('.song-name').text(obj.name);
+         song.find('.song-artist').text(obj.artist);
+        song.find('.song-album').text(obj.album);
+         song.find('.song-duration').text(obj.duration);
+
+        addSongNameClickEvent(obj,i+1);
+        }
+
+        $('#songs').DataTable({
+            paging:false
+        });
+        });
+         $('#radio-1').on('click',function(){
+    console.log("pic1");
+        $('section').css('background-image','url(5485981-sunset-beach-mood-wallpapers.jpg)');
+    });
+
+    $('#radio-2').change(function(){
+        console.log("pic2");
+        $('section').css('background-image','url(im.jfif)');
+    });
+
+        $('#radio-3').change(function(){
+            console.log("pic3");
+        $('section').css('background-image','url(4629174184.jpg)');
+});
+
+$('#radio-4').change(function(){
+    console.log("pic4");
+
+        $('section').css('background-image','url(sad_hd_wallpapers_022.jpg)');
+    });
+
+
+
+</script>
+
+</body>
+</html>
+
